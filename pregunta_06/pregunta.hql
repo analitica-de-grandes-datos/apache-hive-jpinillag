@@ -46,3 +46,19 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+DROP TABLE IF EXISTS data;
+
+CREATE TABLE data (c1 INT, 
+    c2 STRING, 
+    c3 INT,
+    c4 STRING,
+    c5 STRING,
+    c6 STRING) 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ',';
+
+LOAD DATA LOCAL INPATH 'data0.csv' OVERWRITE INTO TABLE data;
+
+CREATE TABLE respuesta AS SELECT UPPER(c5) FROM data;
+
+INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' SELECT * FROM respuesta;
